@@ -1,0 +1,49 @@
+Literator — inicialização e configuração
+
+1. REQUISITOS
+- Windows 10/11 (ou macOS/Linux)
+- Node.js 20 LTS ou superior: https://nodejs.org/
+- Internet para instalar dependências e pesquisar livros
+
+2. RODAR AGORA (SEM CRIAR FIREBASE)
+- Extraia todo o ZIP para uma pasta, por exemplo C:\Literator.
+- Dê dois cliques em INICIAR_WEB_WINDOWS.bat.
+- Aguarde a instalação inicial e abra http://localhost:5173.
+- Clique em “Entrar no modo demonstração”.
+- Nesse modo, favoritos e histórico ficam salvos no navegador deste computador.
+- O modo demonstração não usa login Google nem sincroniza dados com outros dispositivos.
+
+3. FIREBASE REAL (LOGIN GOOGLE + SINCRONIZAÇÃO)
+- Acesse https://console.firebase.google.com/ e crie um projeto chamado Literator.
+- Authentication > Sign-in method > habilite Google.
+- Firestore Database > Create database.
+- Configurações do projeto > Seus apps > Web > registre um app e copie os campos da configuração.
+- Abra apps/web/.env e preencha VITE_FIREBASE_API_KEY, VITE_FIREBASE_AUTH_DOMAIN,
+  VITE_FIREBASE_PROJECT_ID, VITE_FIREBASE_STORAGE_BUCKET,
+  VITE_FIREBASE_MESSAGING_SENDER_ID e VITE_FIREBASE_APP_ID.
+- Em Authentication > Settings > Authorized domains, inclua localhost.
+- Na raiz do projeto execute: npm install -g firebase-tools
+- Execute: firebase login
+- Execute: firebase use --add (selecione o projeto criado)
+- Execute: firebase deploy --only firestore:rules
+- Reinicie o sistema com INICIAR_WEB_WINDOWS.bat.
+
+4. MOBILE (ANDROID / IOS)
+- Preencha apps/mobile/.env com a mesma configuração Firebase, usando o prefixo EXPO_PUBLIC_.
+- Configure os OAuth Client IDs Web, Android e iOS no Google Cloud/Firebase.
+- O identificador Android e iOS do projeto é br.com.literator.app.
+- Na raiz: npm install
+- Na raiz: npm run dev:mobile
+- Android: instale Expo Go no celular e leia o QR Code, ou use Android Studio.
+- Para gerar APK de distribuição, será necessário configurar EAS Build.
+
+5. ADMINISTRADOR
+- Faça login real uma vez com a conta que será administradora.
+- No Firestore, abra users e o documento do UID dessa conta.
+- Altere role de user para admin. Não compartilhe senhas nem chaves privadas.
+
+OBSERVAÇÕES IMPORTANTES
+- Não há como preencher as credenciais reais do Firebase sem acesso à conta Google/Firebase do proprietário.
+- A configuração Firebase Web (apiKey/appId etc.) identifica o app; não é senha. Nunca compartilhe chave privada de conta de serviço.
+- O modo demonstração é local e usa dados fictícios/locais. Não serve para produção ou sincronização.
+- Cliques em lojas são registrados. Vendas/valores precisam ser lançados ou conciliados com relatórios reais da Amazon.

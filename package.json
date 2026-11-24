@@ -1,0 +1,11 @@
+{
+  "name": "literator-suite",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": ["apps/web", "apps/mobile"],
+  "scripts": {
+    "dev:web": "npm run dev --workspace @literator/web",
+    "build:web": "npm run build --workspace @literator/web",
+    "dev:mobile": "npm run start --workspace @literator/mobile"
+  }
+}
